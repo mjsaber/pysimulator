@@ -8,7 +8,7 @@ mystery_cnt = 0
 
 
 def wait():
-    time.sleep(random.uniform(0.5, 1))
+    time.sleep(random.uniform(0.3, 0.7))
 
 
 def click_if_found(step, loc):
@@ -16,6 +16,7 @@ def click_if_found(step, loc):
         print("not found: ", step)
         return
     print(step, loc)
+    pg.click(loc.x/2, loc.y/2)
     pg.click(loc.x/2, loc.y/2)
     wait()
 
@@ -25,6 +26,7 @@ def buy(loc, bookmark):
         return
     # move x-axis right 500 pixels, y-axis down 30 pixels
     print("found bookmark", bookmark, loc)
+    pg.click(loc.x/2+500, loc.y/2+30)
     pg.click(loc.x/2+500, loc.y/2+30)
     wait()
     if bookmark == "normal":
@@ -68,6 +70,7 @@ def search(rounds):
 
         loc = pg.locateCenterOnScreen('material/confirm_refresh.png', confidence=0.9)
         click_if_found("confirm_refresh", loc)
+        print("normal: ", normal_cnt, "mystery: ", mystery_cnt)
 
 
 def confirm_boss(boss):
@@ -109,9 +112,8 @@ def farm(boss):
 
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser(description='Process some integers.')
-    # parser.add_argument('rounds', type=int, help='number of round searching shop')
-    # args = parser.parse_args()
-    # search(args.rounds)
-    # print("normal: ", normal_cnt, "mystery: ", mystery_cnt)
-    farm(1)
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('rounds', type=int, help='number of round searching shop')
+    args = parser.parse_args()
+    search(args.rounds)
+    # farm(1)
